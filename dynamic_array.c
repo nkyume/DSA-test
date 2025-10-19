@@ -143,3 +143,31 @@ void merge_sort(long *arr, int start, int end) {
 }
 
 void d_arr_merge_sort(DArray *arr) { merge_sort(arr->arr, 0, arr->size - 1); }
+
+void quick_sort(long *arr, int start, int end) {
+  if ((end - start) < 1)
+    return;
+  int left, right, pivot;
+  pivot = (end + start) / 2;
+  left = start;
+  right = end - 1;
+  swap(arr + pivot, arr + end);
+  pivot = end;
+  for (;;) {
+    if (left > right) {
+      break;
+    }
+    if (arr[left] > arr[right]) {
+      swap(arr + left, arr + right);
+    }
+    if (arr[left] < arr[pivot])
+      left++;
+    if (arr[right] > arr[pivot])
+      right--;
+  }
+  swap(arr + left, arr + pivot);
+  quick_sort(arr, start, left);
+  quick_sort(arr, left + 1, end);
+};
+
+void d_arr_quick_sort(DArray *arr) { quick_sort(arr->arr, 0, arr->size - 1); }

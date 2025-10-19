@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,6 +33,7 @@ long d_array_get(DArray *, size_t);
 void selection_sort(DArray *);
 void insertion_sort(DArray *);
 void d_arr_merge_sort(DArray *);
+void d_arr_quick_sort(DArray *);
 
 enum { first = 1000, second = 10000, third = 100000 };
 
@@ -210,6 +210,19 @@ void bench_sort() {
 
   arr = d_array_new();
   start = clock();
+  for (int i = 0; i < 1000; i++) {
+    d_array_insert(arr, 0, i);
+  }
+  for (int i = 0; i < arr->size; i++) {
+  }
+  d_arr_quick_sort(arr);
+  d_array_destroy(arr);
+  end = clock();
+  printf("QUICK | 1.000 elements %fms\n",
+         (double)(end - start) * 1000 / CLOCKS_PER_SEC);
+
+  arr = d_array_new();
+  start = clock();
   for (int i = 0; i < 100000; i++) {
     d_array_insert(arr, 0, i);
   }
@@ -228,6 +241,19 @@ void bench_sort() {
   d_array_destroy(arr);
   end = clock();
   printf("INSERTION | 100.000 elements %fms\n",
+         (double)(end - start) * 1000 / CLOCKS_PER_SEC);
+
+  arr = d_array_new();
+  start = clock();
+  for (int i = 0; i < 100000; i++) {
+    d_array_insert(arr, 0, i);
+  }
+  for (int i = 0; i < arr->size; i++) {
+  }
+  d_arr_quick_sort(arr);
+  d_array_destroy(arr);
+  end = clock();
+  printf("QUICK | 100.000 elements %fms\n",
          (double)(end - start) * 1000 / CLOCKS_PER_SEC);
 }
 
